@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">第二天</string>
+
+    <string-array name="code">
+        <item>JAVA</item>
+        <item>C</item>
+        <item>C++</item>
+        <item>KOTLIN</item>
+        <item>SWIFT</item>
+    </string-array>
+</resources>
