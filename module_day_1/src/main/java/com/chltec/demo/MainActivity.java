@@ -1,5 +1,6 @@
 package com.chltec.demo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (isChecked) {
                     showToast("选择了1");
                     button.setVisibility(View.GONE);
-                }else{
+                } else {
                     button.setVisibility(View.VISIBLE);
                 }
                 break;
@@ -95,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_click1:
                 Toast.makeText(MainActivity.this, "这是按钮2", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, WorkActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;

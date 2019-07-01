@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_top"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/top" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/iv_top"
+        android:scaleType="fitXY"
+        android:src="@mipmap/bottom" />
+
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="180dp"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:id="@+id/cb_agree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已同意"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/iv_enter"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            android:src="@mipmap/enter"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_top"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="16dp"
+        android:text="为什么要编写这个教程？因为我在学习Git的过程中，买过书，也在网上Google了一堆Git相关的文章和教程，但令人失望的是，这些教程不是难得令人发指，就是简单得一笔带过，或者，只支离破碎地介绍Git的某几个命令，还有直接从Git手册粘贴帮助文档的，总之，初学者很难找到一个由浅入深，学完后能立刻上手的Git教程。"
+        android:textSize="16sp" />
+
+</RelativeLayout>
