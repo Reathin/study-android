@@ -19,7 +19,10 @@ public class MainActivity extends AppCompatActivity {
         String text = getString(R.string.text);
         String text1 = getResources().getString(R.string.text);
 
+
         int color1 = Color.parseColor("#ffffff");
+
+
         int color = ContextCompat.getColor(this, R.color.colorAccent);
 
         TextView textView = new TextView(this);
