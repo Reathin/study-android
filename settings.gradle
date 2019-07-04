@@ -1,1 +1,1 @@
-include ':module_day_1', ':module_day_2', ':module_day_3'
+include ':module_day_1', ':module_day_2', ':module_day_3', ':module_day_4'
