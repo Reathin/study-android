@@ -12,6 +12,13 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+    <!--<fragment-->
+    <!--android:id="@+id/fragment_1"-->
+    <!--android:name="com.chltec.module_day_9.OneFragment"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1" />-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp">
