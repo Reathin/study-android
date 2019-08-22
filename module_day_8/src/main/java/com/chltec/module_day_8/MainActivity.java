@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.rairmmd.andsqlite.AndSQLiteInstance;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,10 +20,21 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okio.Buffer;
+import okio.BufferedSink;
+import okio.BufferedSource;
+import okio.Okio;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String imageUrl = "http://b-ssl.duitang.com/uploads/blog/201409/06/20140906090448_tfauZ.jpeg";
     private ImageView imageView;
+    private String imageUrl1 = "http://b-ssl.duitang.com/uploads/item/201507/04/20150704145038_zMX5a.jpeg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,24 +111,79 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
+    private void downloadImage() {
+        imageUrl1 = "http://b-ssl.duitang.com/uploads/item/201507/04/20150704145038_zMX5a.jpeg";
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
+        Request request = new Request.Builder().url(imageUrl1)
+                .addHeader("token", "efewfwefweafawef").build();
+        Call call = okHttpClient.newCall(request);
+//        Response response = call.execute();
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                System.out.println("请求成功");
+                if (response.isSuccessful()) {
+                    long current = 0;
+                    File sdcard = Environment.getExternalStorageDirectory();
+                    File yoju = new File(sdcard, "yoju1");
+                    yoju.mkdirs();
+                    final File imageFile = new File(yoju, "image.jpg");
+
+                    BufferedSink sink = Okio.buffer(Okio.sink(imageFile));
+                    Buffer buffer = sink.buffer();
+                    long total = response.body().contentLength();
+                    long len;
+                    int bufferSize = 200 * 1024; //200kb
+                    BufferedSource source = response.body().source();
+                    while ((len = source.read(buffer, bufferSize)) != -1) {
+                        current += len;
+                        int progress = ((int) ((current * 100 / total)));
+                        System.out.println("进度：" + progress);
+                    }
+                    source.close();
+                    sink.close();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, "下载完成", Toast.LENGTH_SHORT).show();
+                            Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getPath());
+                            imageView.setImageBitmap(bitmap);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("请求失败：" + e.getMessage());
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_download:
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        doDownload();
-                    }
-                });
-                thread.start();
+//                Thread thread = new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        doDownload();
+//                    }
+//                });
+//                thread.start();
+                downloadImage();
                 break;
             case R.id.btn_show:
-                File sdcard = Environment.getExternalStorageDirectory();
-                File yoju = new File(sdcard, "yoju1");
-                final File imageFile = new File(yoju, "image.jpg");
-                Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getPath());
-                imageView.setImageBitmap(bitmap);
+//                File sdcard = Environment.getExternalStorageDirectory();
+//                File yoju = new File(sdcard, "yoju1");
+//                final File imageFile = new File(yoju, "image.jpg");
+//                Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getPath());
+//                imageView.setImageBitmap(bitmap);
+
+                Picasso.get().load(imageUrl1).placeholder(R.mipmap.ic_launcher).into(imageView);
+
                 break;
             default:
                 break;
